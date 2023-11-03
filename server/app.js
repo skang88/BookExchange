@@ -1,7 +1,5 @@
 const express = require('express'); 
 const morgan = require('morgan');
-const bodyParser = require('body-parser')
-const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
 // start express app
@@ -11,5 +9,14 @@ const app = express();
 app.use(morgan('dev'));
 app.use(express.json())
 app.use(cors({ origin: process.env.CLIENT_SERVER }));
+
+
+const authRouter = require('./routers/authRouter');
+app.use('/api/auth', authRouter);
+
+const bookRouter = require('./routers/bookRouter');
+app.use('/api/book', bookRouter)
+
+
 
 module.exports = app;

@@ -18,11 +18,18 @@ const bookSchema = new mongoose.Schema({
         type: Number,
         required: true
     }, 
+    context: {
+        type: String,
+        required: true
+    },
     isavailable: {
         type: Boolean, 
-        default: 1
+        default: true
     }
-}, { timestamps: true });
+}, { 
+    timestamps: true, 
+    collection: "books" 
+});
 
 const Book = mongoose.model('Book', bookSchema);
 
