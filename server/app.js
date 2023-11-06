@@ -8,8 +8,9 @@ const app = express();
 // for debugging to log in the console
 app.use(morgan('dev'));
 app.use(express.json())
-app.use(cors({ origin: process.env.CLIENT_SERVER }));
 
+// To communicate with client server
+app.use(cors({ origin: process.env.CLIENT_SERVER }));
 
 const authRouter = require('./routers/authRouter');
 app.use('/api/auth', authRouter);

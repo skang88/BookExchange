@@ -1,7 +1,6 @@
 import React from 'react'
 
 export default function Footer() {
-  console.log("Hi from Footer")
   return (
     <nav className="navbar navbar-expand-lg bg-light mt-3">
       <span className="navbar-text">

@@ -22,7 +22,7 @@ const bookSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    isavailable: {
+    isAvailable: {
         type: Boolean, 
         default: true
     }

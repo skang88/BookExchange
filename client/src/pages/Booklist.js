@@ -3,44 +3,44 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './BookList.css';
 import Layout from '../component/Layout'
+import Bookcard from '../component/Bookcard';
 
-// Card Component
-function Card({ books }) {
-    return (
-      <div>
-        <h2 className="no-link">{books.title}</h2>
-        <p> Status: {books.status}, &nbsp;&nbsp;
-            Seller: {books.owner}, &nbsp;&nbsp;
-            Price: ${books.price}</p>
-        <p> book_id: {books._id} </p>
-      </div>
-    );
-  }
 
-export default function Booklist() {
-    const [books, setBooks] = useState([]);
+export default function BookList() {
+    const [data, setData] = useState([]);
+    const [selectedBookId, setSelectedBookId] = useState(null);
+
+    const handleBookClick = (bookId) => {
+      setSelectedBookId(bookId);
+      console.log("Selected book is ", selectedBookId)
+    };
+
     const apiUrl = `${process.env.REACT_APP_BACKEND_URL}/api/book/getBooks`;
-
+    
+    // data 상태가 변경될 때 GET 요청을 보내는 useEffect
     useEffect(() => {
-        // 서버에서 책 데이터를 가져오는 요청
+      if(data.length === 0){
         axios.get(apiUrl) // Server API Endpoint
           .then((response) => {
-            setBooks(response.data);
+            setData(response.data);
             console.log(response.data);
           })
           .catch((error) => {
             console.error('Error fetching books:', error);
           });
-      }, [apiUrl]);
+        }
+    },[data.length, apiUrl]);
+ 
 
   return (
     <Layout>
     <div className="card-container no-link">
+      <p className='ml-3'> <strong>{data.length}</strong> Books are available. </p>
       
-      {books.map((book) => (
+      {data.map((book) => (
         <div key = {book._id} className='card-content'>  
-          <Link to='/bookdetail' className="nav-link">
-            <Card books = {book} />
+          <Link to={`/bookdetail/${book._id}`} onBookClick={handleBookClick} className="nav-link">
+            <Bookcard books = {book} />
           </Link>
         </div>  
       ))}

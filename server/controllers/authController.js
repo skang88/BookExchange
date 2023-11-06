@@ -9,43 +9,30 @@ function createToken(username) {
   return jwt.sign({ username }, secretKey, { expiresIn: '1d' });
 }
 
-compareHashedPassword = async (userInputPassword, savedHash) => {
-  bcrypt.compare(userInputPassword, savedHash, (err, result) => {
-    if (err) { 
-      return(err);  
-    } else {
-      return(result)
-    }
-  });
-}
-
 exports.login = async (req, res) => {
 
   const { username, password } = req.body;
-
   // login - find user in the database and verify if match username and password.
   await User.findOne({ username: username })
-  .then((foundUser)=>{
-    if (foundUser) {
-      // verification login form info and user info in the database
-      if (foundUser.username === username && compareHashedPassword(password, foundUser.password)) {
-        const token = createToken(username);
-        res.status(200).json({ token });
+    .then(async (foundUser)=>{
+      if (foundUser) {
+        // verification login form info and user info in the database
+        if (foundUser.username === username && await bcrypt.compare(password, foundUser.password)) {
+          const token = createToken(username);
+          res.status(200).json({ token });
+        } else {
+          res.status(401).json({ error: 'User name or Password is not match' });
+        }
       } else {
-        res.status(401).json({ error: 'User name or Password is not match' });
+        res.status(404).json({ error: 'User not found' })
       }
-
-    } else {
-      res.status(404).json({ error: 'User not found' })
-    }
-
   })  
 };
 
 exports.signup = async (req, res) => {
   const { email, username, password } = req.body;
 
-  // 새 사용자 생성
+  // Create a new user
   const newUser = new User({
     email,
     username,
@@ -53,7 +40,7 @@ exports.signup = async (req, res) => {
   });
 
   try {
-    // 사용자 저장
+    // Save to database
     await newUser.save();
     const token = createToken(username);
     res.status(200).json({ token });
@@ -61,7 +48,6 @@ exports.signup = async (req, res) => {
     console.error(err);
     res.status(500).send('Error occured while creating a user');
   }
-
 }
 
 // verify token in the Header
@@ -74,6 +60,7 @@ exports.verifyToken = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, secretKey);
     req.decodedUser = decoded.username; // assign decoded.user to req.user for using next middleware this user information
+    console.log("Current User info: ",decoded)
     next(); // continue to middleware chain
   } catch (error) {
     res.status(400).json({ error: 'Invalid token' });
@@ -94,9 +81,8 @@ exports.returnUserbyToken = (req, res) => {
   }
 };
 
-
 exports.getUsers = async (req, res) => {
-
+  // Get all users
   try {
     const users = await User.find();
     if(users && users.length > 0  ){
@@ -104,8 +90,21 @@ exports.getUsers = async (req, res) => {
     else{
         res.send('No Users are here');
     }
-} catch (err) {
-    res.status(500).json({ message: err.message });
+  } catch (err) {
+      res.status(500).json({ message: err.message });
+  }
 }
 
+exports.getUserInfo = async (req, res) => {
+  try {
+    const currentuser = req.decodedUser;
+    const user = await User.findOne({ username: currentuser }, { password: 0 })
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch(err) {
+    res.status(500).json({ message: err.message })
+  }
 }
