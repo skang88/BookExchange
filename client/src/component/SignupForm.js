@@ -78,7 +78,7 @@ export default function SignupForm() {
           })
           .catch((error) => {
             console.error('Error adding User:', error);
-            alert('Error adding User');
+            alert(`Error adding User\n${error}`);
           });
       }
     };  

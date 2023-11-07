@@ -3,9 +3,11 @@ import { useJwt } from "react-jwt";
 import { useNavigate } from 'react-router-dom';
 
 function LogoutBtn() {
+  const navigate = useNavigate();
   const handleLogout = () => {
       // Logout : Remove token in local storage
       localStorage.removeItem('token');
+      navigate('/');
       window.location.reload();
       };      
   return (

@@ -27,61 +27,53 @@ export default function Myinfo() {
         } else {
             console.log("Not Empty", data)
         }
-    })
+    });
 
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({
         email: '',
         password: '',
-    })
+    });
     const [formUpdateData, setFormUpdateData] = useState({
         email: '',
         password: '',
-    })
+    });
 
     useEffect(() => {
         setFormData({
             email: data.email
         })
     },[data])
-
+    
     useEffect(() => {
         setFormUpdateData({
-            email: data.email
+            email: formData.email, 
+            password: formData.password
         })
-    },[data])
+    },[formData])
 
-    const [formErrors, setFormErrors] = useState({
-        email: '',
-        password: '',
-    })
-
+    const updateApiUrl = `${process.env.REACT_APP_BACKEND_URL}/api/auth/updateUserinfo`;
     const handleSaveClick = (e) => {
-        e.preventDefault();
-        let hasErrors = false;
-        const newFormErrors = {...formErrors};
-
-        if (formData.email.trim() === ''){
-            newFormErrors.email = 'Email is required';
-            hasErrors = true
-        } else {
-            newFormErrors.email = '';
+        axios.post(updateApiUrl, formUpdateData, { headers })
+        .then((response) => {
+            console.log('HTTP status code:', response.status);
+            console.log('server response data:', response.data);
+            console.log('server response header:', response.headers);
+            
+            if (response.status === 200) {
+                // if book successfully added 
+                console.log('Data has been sucessfully updated', response.data);
+                alert(`Response Satus Code: ${response.status}. \nData has been sucessfully updated`);
+                setIsEditing(false);
+                setFormData({
+                    email: response.data.email
+                })
+            }
+        })
+        .catch((error) => {
+            alert(`Error: ${error.response.status}.\n${error.response.data.message}`);
+            });
         }
-
-        if (formData.password === ''){
-            newFormErrors.password = 'Password is required';
-            hasErrors = true
-        } else {
-            newFormErrors.password = ''
-        }
-
-        if (hasErrors) {
-            setFormErrors(newFormErrors);
-        } else {
-            // data submit to server
-            setIsEditing(false);
-        }    
-    };
 
     const handleUpdateChange = (e) => {
         const { name, value } = e.target;
@@ -89,19 +81,25 @@ export default function Myinfo() {
           ...formUpdateData,
           [name]: value,
         });
-      };
+    };
 
     const handleEditClick = () => {
         setIsEditing(true);
-        };
+    };
 
     const handleCancelClick = () => {
         setIsEditing(false);
+        setIsPasswordEditing(false);
         setFormUpdateData({
             email: data.email
         })
-        };
+    };
 
+    const [isPasswordEditing, setIsPasswordEditing] = useState(false);
+
+    const handleChangePasswordClick = () => {
+        setIsPasswordEditing(true);
+    };
 
 
     return (
@@ -131,26 +129,30 @@ export default function Myinfo() {
             { isEditing ? (
                 <>
                 <label className='mt-3'> Password </label>
-                <input className='form-control' type="password" name="username" required></input>
+                <input className='form-control' type="password" name="password" onChange={handleUpdateChange} required></input>
                 </>
             ) : ("") }
         </div>
         { isEditing ? (
             <>
-            <button className="btn btn-warning mt-3 mb-3 mr-3 ml-1" onClick={handleCancelClick}>Cancel</button>
-            <button className="btn btn-success mt-3 mb-3 mr-3 ml-1" onClick={handleSaveClick}>Save</button>
+            <button className="btn btn-success mt-3 mb-3 mr-2 ml-2" onClick={handleSaveClick}>Save</button>
+            <button className="btn btn-warning mt-3 mb-3 mr-2 ml-2" onClick={handleCancelClick}>Cancel</button>
+            
             </> 
 
         ):(
             <>
-            <button className="btn btn-primary mt-3 mb-3 mr-3 ml-1" onClick={handleEditClick}>Edit</button>
-            <button className="btn btn-primary mt-3 mb-3"> Change password</button>
+            <button className="btn btn-primary mt-3 mb-3 mr-3 ml-1" onClick={handleEditClick}>Edit Information</button>
+            { isPasswordEditing ? (
+                <>
+                <button className="btn btn-success mt-3 mb-3 mr-2 ml-2"> Save</button>
+                <button className="btn btn-warning mt-3 mb-3 mr-2 ml-2" onClick={handleCancelClick}>Cancel</button>
+                </>
+            ) : (
+                <button className="btn btn-primary mt-3 mb-3" onClick={handleChangePasswordClick}> Change password</button>
+            )}
             </>
         )}
-        
-        
-        
-
     </Layout>
     )
 }

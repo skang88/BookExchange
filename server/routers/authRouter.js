@@ -11,6 +11,6 @@ router
     .get('/getUserInfo', authController.verifyToken, authController.getUserInfo)
     .post('/login', authController.login)
     .post('/signup', authController.signup)
-
+    .post('/updateUserinfo', authController.verifyToken, authController.updateUserInfo)
 
 module.exports = router;

@@ -108,3 +108,55 @@ exports.getUserInfo = async (req, res) => {
     res.status(500).json({ message: err.message })
   }
 }
+
+// can only change email, + additional infor if develope. 
+exports.updateUserInfo = async (req, res) => {
+  try {
+    const currentuser = req.decodedUser;
+    const foundUser = await User.findOne({ username: currentuser })
+    
+    if (!foundUser) {
+      return res.status(404).json({ message: "User not found" })
+    }
+
+    const isPasswordMatch = await bcrypt.compare(req.body.password, foundUser.password);
+
+    if (!isPasswordMatch) {
+      return res.status(401).json({ message: "Password not matched" })
+    }
+    
+    foundUser.email = req.body.email;
+    await foundUser.save();
+
+    res.status(200).json({ message: "User information successfully updated"});
+    
+  } catch(err) {
+    res.status(500).json({ message: err.message })
+    console.log(err)
+  }
+}
+
+exports.updatePassword = async (req, res) => {
+  try {
+    const currentuser = req.decodedUser;
+    const foundUser = await User.findOne({ username: currentuser })
+    const isPasswordMatch = await bcrypt.compare(req.body.password, foundUser.password);
+
+    if (!isPasswordMatch) {
+      return res.status(401).json({ message: "Password not matched" })
+    }
+    
+    if (!foundUser) {
+      return res.status(404).json({ message: "User not found" })
+    }
+
+    foundUser.password = req.body.password;
+    await foundUser.save();
+
+    res.status(200).json({ message: "User password successfully updated"});
+    
+  } catch(err) {
+    res.status(500).json({ message: err.message })
+    console.log(err)
+  }
+}
