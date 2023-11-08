@@ -98,7 +98,7 @@ exports.getUsers = async (req, res) => {
 exports.getUserInfo = async (req, res) => {
   try {
     const currentuser = req.decodedUser;
-    const user = await User.findOne({ username: currentuser }, { password: 0 })
+    const user = await User.findOne({ username: currentuser }, { password : 0} )
     if (user) {
       res.status(200).json(user);
     } else {
@@ -113,7 +113,7 @@ exports.getUserInfo = async (req, res) => {
 exports.updateUserInfo = async (req, res) => {
   try {
     const currentuser = req.decodedUser;
-    const foundUser = await User.findOne({ username: currentuser })
+    const foundUser = await User.findOne({ username: currentuser } )
     
     if (!foundUser) {
       return res.status(404).json({ message: "User not found" })
@@ -128,7 +128,7 @@ exports.updateUserInfo = async (req, res) => {
     foundUser.email = req.body.email;
     await foundUser.save();
 
-    res.status(200).json({ message: "User information successfully updated"});
+    res.status(200).json({ username: foundUser.username, email: foundUser.email });
     
   } catch(err) {
     res.status(500).json({ message: err.message })
@@ -150,7 +150,7 @@ exports.updatePassword = async (req, res) => {
       return res.status(404).json({ message: "User not found" })
     }
 
-    foundUser.password = req.body.password;
+    foundUser.password = req.body.newPassword;
     await foundUser.save();
 
     res.status(200).json({ message: "User password successfully updated"});

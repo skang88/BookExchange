@@ -12,5 +12,6 @@ router
     .post('/login', authController.login)
     .post('/signup', authController.signup)
     .post('/updateUserinfo', authController.verifyToken, authController.updateUserInfo)
+    .post('/updateUserPassword', authController.verifyToken, authController.updatePassword)
 
 module.exports = router;
