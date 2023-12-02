@@ -1,5 +1,5 @@
 // Required for reading .env file
-require('dotenv').config();
+require('dotenv').config()
 
 // required for database to perform CRUD operations 
 const mongoose = require('mongoose'); // Mongoose 모듈 추가
