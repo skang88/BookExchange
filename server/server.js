@@ -4,6 +4,7 @@ require('dotenv').config()
 // required for database to perform CRUD operations 
 const mongoose = require('mongoose'); // Mongoose 모듈 추가
 
+// this is new from windows 10, leadgoon
 // required for the application to run
 const app = require('./app');
 
