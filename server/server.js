@@ -8,6 +8,7 @@ const mongoose = require('mongoose'); // Mongoose 모듈 추가
 // This is from testing btanch
 // This is from skang 88, main branch
 // Hi skang88, I commmint to main branch also. 
+// Thank you leadgoon. if you change the main brahch directly, it could be risky. 
 // required for the application to run
 const app = require('./app');
 
