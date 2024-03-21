@@ -4,7 +4,25 @@ This project is a platform that allows students to exchange, buy, and sell their
 Keywords: Book exchange, Node.js, React, MongoDB
 
 ## Overview of the Project
-For this project, I named the domain Book Hub as a platform for ASU students to freely exchange their books, allowing them to buy, sell, and exchange. Students who sign up for this platform can view lists of books posted by other students and negotiate the prices they set for the books they want.![image](https://github.com/skang88/BookExchange/assets/142484222/57642826-8145-48b3-856a-9e27459d1653)
+For this project, I named the domain Book Hub as a platform for ASU students to freely exchange their books, allowing them to buy, sell, and exchange. Students who sign up for this platform can view lists of books posted by other students and negotiate the prices they set for the books they want.
+
+## Problem Statement
+
+The problem is that it is difficult for students to freely exchange their books with other students. This can be cumbersome because students usually must send texts to their acquaintances or ask them what books they have. Therefore, there is a need for a platform where students can search, register, and exchange the books they want, and this is the motivation for starting this project.
+
+
+## Scope and Limitations
+The scope of this project includes registering and logging in to use the platform, authentication using JWT tokens, and registering, editing, and deleting books to exchange books. Limitations include strengthening login convenience and security using OAuth2.0, and not being able to use https using OpenSSL, which may leave security vulnerabilities.
+
+# System Design
+
+## Architecture Diagrams
+
+<img width="452" alt="image" src="https://github.com/skang88/BookExchange/assets/142484222/d8c2bf08-726a-41d7-bc0a-46348cf498e7">
+
+
+
+
 
 
 
