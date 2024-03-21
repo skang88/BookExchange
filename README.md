@@ -21,14 +21,24 @@ The scope of this project includes registering and logging in to use the platfor
 <img width="452" alt="image" src="https://github.com/skang88/BookExchange/assets/142484222/d8c2bf08-726a-41d7-bc0a-46348cf498e7">
 
 
+## Flowcharts
 
+The following shows the basic book API and Login API. When registering or deleting a book, user identification is performed using a JWT token. After the user is identified, the owner of the book can be identified by parsing the username to see who registered the book. And JWT tokens are given when you sign up or log in.
 
-
-
-
- ![image](https://github.com/skang88/BookExchange/assets/142484222/82dd4a60-fd1b-40c2-be8c-2e2f035ed213)
+Figure 1
+Book API flowchart
+![image](https://github.com/skang88/BookExchange/assets/142484222/461d52a1-8864-45d4-a255-088e3ce44c2c)
 
  
+Figure 2 
+Login API Flowchart
+![image](https://github.com/skang88/BookExchange/assets/142484222/c1157632-dad3-4f95-9176-8870b94177c4)
+ 
+
+Figure 3. Basic App structure
+	The basic structure of the app is designed with an MVC structure. When an HTTP request is received, a view page is displayed through the router, and when a specific API is requested, data is exchanged with the database according to the controller and then displayed as a view page again to process the request.
+ <img width="452" alt="image" src="https://github.com/skang88/BookExchange/assets/142484222/ccf22ab8-3a82-4fe1-9524-51f96d913696">
+
 
 ## How to run the project in the CLI command
 
