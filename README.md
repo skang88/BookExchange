@@ -31,6 +31,8 @@ ssh -i ~/.ssh/id_rsa username@IP_address
 Service Status Check
 ```
 systemctl status [servicename]
+systemctl status BookExchangeBackend
+systemctl status BookExchangeFrontend
 ```
 
 If node.js version is not matched OCI Linux OS update
@@ -122,10 +124,12 @@ WantedBy=multi-user.target
 
 Frontend Service Start Service
 sudo systemctl daemon-reload
+sudo systemctl stop BookExchangeFrontend.service
 sudo systemctl restart BookExchangeFrontend.service
 sudo systemctl status BookExchangeFrontend.service
 
 ```
+sudo systemctl stop BookExchangeFrontend.service
 sudo systemctl start BookExchangeFrontend.service
 sudo systemctl status BookExchangeFrontend.service
 ```
