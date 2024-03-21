@@ -58,7 +58,14 @@ The front end server in the client folder, run command
 npm start
 ```
 
-and the back end server in the server folder, 
+and the back end server in the server folder, prepare .env file in the serfer folder
+```
+PORT=YOUR_PORT_NUMBER
+MONGODB_URI=YOUR_MONGO_DB_URL
+SECRET_KEY=YOUR_JWT_TOKEN_SECRET_KEY
+CLIENT_SERVER=http://localhost:3000
+```
+
 ```
 npm start
 ```
