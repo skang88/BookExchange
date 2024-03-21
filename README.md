@@ -27,17 +27,20 @@ The following shows the basic book API and Login API. When registering or deleti
 
 Figure 1
 Book API flowchart
-![image](https://github.com/skang88/BookExchange/assets/142484222/461d52a1-8864-45d4-a255-088e3ce44c2c)
+<img width="452" alt="image" src="https://github.com/skang88/BookExchange/assets/142484222/b7a9ca3e-b0ba-4686-8aa1-7d4a01fa7104">
+
 
  
 Figure 2 
 Login API Flowchart
-![image](https://github.com/skang88/BookExchange/assets/142484222/c1157632-dad3-4f95-9176-8870b94177c4)
+<img width="421" alt="image" src="https://github.com/skang88/BookExchange/assets/142484222/c3453de6-8f9a-4592-85f2-25874da0dfe7">
+
  
 
 Figure 3. Basic App structure
 	The basic structure of the app is designed with an MVC structure. When an HTTP request is received, a view page is displayed through the router, and when a specific API is requested, data is exchanged with the database according to the controller and then displayed as a view page again to process the request.
- <img width="452" alt="image" src="https://github.com/skang88/BookExchange/assets/142484222/ccf22ab8-3a82-4fe1-9524-51f96d913696">
+ <img width="452" alt="image" src="https://github.com/skang88/BookExchange/assets/142484222/72500735-9aee-46de-a39a-ec9579d73ead">
+
 
 
 ## How to run the project in the CLI command
