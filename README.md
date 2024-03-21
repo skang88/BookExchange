@@ -175,17 +175,12 @@ WantedBy=multi-user.target
 ```
 
 ```
-
 Frontend Service Start Service
 sudo systemctl daemon-reload
 sudo systemctl stop BookExchangeFrontend.service
 sudo systemctl restart BookExchangeFrontend.service
 sudo systemctl status BookExchangeFrontend.service
 
-```
-sudo systemctl stop BookExchangeFrontend.service
-sudo systemctl start BookExchangeFrontend.service
-sudo systemctl status BookExchangeFrontend.service
 ```
 
 /usr/local/bin/serve
