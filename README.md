@@ -51,7 +51,7 @@ The basic structure of the app is designed with an MVC structure. When an HTTP r
 
 This project is a platform to exchange books for students.
 
-To start this application, two server is needed. 
+To start this application, two servers are needed. 
 
 The front end server in the client folder, run command 
 ```
